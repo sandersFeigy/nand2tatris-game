@@ -1,0 +1,239 @@
+class Car {
+
+    field int location, constLocation, tempLocation, carAmount;
+
+    /*
+        Constructor cars.
+    */
+    constructor Car new(int loc, int tempCarAmount){
+        let location = loc;
+        let constLocation = loc;
+        let tempLocation = constLocation;
+        let carAmount = tempCarAmount;
+        return this;
+    }
+
+    /*
+        The function drow the car.
+    */
+    method void createCar(int toDraw, int startIn) {
+            do leftUp(toDraw, startIn);
+            do middleUp(toDraw, startIn);
+            do rightUp(toDraw, startIn);
+            do leftBottom(toDraw, startIn);
+            do middleBottom(toDraw, startIn);
+            do rightBottom(toDraw, startIn);                 
+        return;
+    }
+    
+
+    method int mod(int i) {
+        var int cal;
+        let cal = i - ((i / 2) * 2);
+        return cal;
+    }
+
+    /*
+        The function drow cars in a row.
+    */
+    method void createCars(int toDraw) {
+        var int i;
+        let i = 0;
+        while (i < carAmount) {
+            do createCar(toDraw, (i * 9) + mod(i));
+            let i = i + 1;
+        }
+        return;
+    }
+   
+    /*
+        The function start the running of the row of the cars.
+    */
+    method boolean runCar(int delay){
+        var boolean notCrash;
+        let notCrash = true;
+        do Sys.wait(delay);
+        do createCars(0);
+        let location = tempLocation;
+        let tempLocation = tempLocation + 1;
+        if (tempLocation = (constLocation + 30)) {
+            let tempLocation = constLocation;
+        }
+        let notCrash = checkCrash();
+        do createCars(1);
+        return notCrash;
+    }
+    
+    /*
+        The function check if there is a crash between the player and one of the cars.
+    */
+    method boolean checkCrash() {
+        var int i, j, tempCarLoc;
+        let i = 0;
+        let j = 0;
+        let tempCarLoc = 0;
+        while (i < carAmount) {
+            let tempCarLoc = ((i * 9) + mod(i)) + 16864 + location;
+            while (j < 3) {
+                if(~(Memory.peek(tempCarLoc + j) = 0)) {
+                    return false;
+                }
+                let j = j + 1;
+            }
+            let i = i + 1;
+            let j = 0;
+        }
+        return true;
+    }
+
+    /*
+        The function draw the left up part of the car.
+    */
+    method void leftUp(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384 + location+startIn;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, toDraw * -4096);
+        do Memory.poke(memAddress+128, toDraw * -4096);
+        do Memory.poke(memAddress+160, toDraw * -4096);
+        do Memory.poke(memAddress+192, toDraw * -256);
+        do Memory.poke(memAddress+224, toDraw * -128);
+        do Memory.poke(memAddress+256, toDraw * -64);
+        do Memory.poke(memAddress+288, toDraw * -32);
+        do Memory.poke(memAddress+320, toDraw * -16);
+        do Memory.poke(memAddress+352, toDraw * -16);
+        do Memory.poke(memAddress+384, toDraw * -16);
+        do Memory.poke(memAddress+416, toDraw * -16);
+        do Memory.poke(memAddress+448, toDraw * -16);
+        do Memory.poke(memAddress+480, toDraw * -16);
+        return;
+    }
+    
+    /*
+        The function draw the middle up part of the car.
+    */
+    method void middleUp(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384+startIn+location+1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, toDraw*-4081);
+        do Memory.poke(memAddress+128, toDraw*-4081);
+        do Memory.poke(memAddress+160, toDraw*-4081);
+        do Memory.poke(memAddress+192, toDraw*-1);
+        do Memory.poke(memAddress+224, toDraw*-1);
+        do Memory.poke(memAddress+256, toDraw*-1);
+        do Memory.poke(memAddress+288, toDraw*-1);
+        do Memory.poke(memAddress+320, toDraw*-1);
+        do Memory.poke(memAddress+352, toDraw*-1);
+        do Memory.poke(memAddress+384, toDraw*-1);
+        do Memory.poke(memAddress+416, toDraw*-1);
+        do Memory.poke(memAddress+448, toDraw*-1);
+        do Memory.poke(memAddress+480, toDraw*-1);
+        return;
+    }
+    
+    /*
+        The function draw the right up part of the car.
+    */
+    method void rightUp(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384+startIn+location+2;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, toDraw*15);
+        do Memory.poke(memAddress+128, toDraw*15);
+        do Memory.poke(memAddress+160, toDraw*15);
+        do Memory.poke(memAddress+192, toDraw*255);
+        do Memory.poke(memAddress+224, toDraw*1023);
+        do Memory.poke(memAddress+256, toDraw*4095);
+        do Memory.poke(memAddress+288, toDraw*8191);
+        do Memory.poke(memAddress+320, toDraw*16383);
+        do Memory.poke(memAddress+352, toDraw*16383);
+        do Memory.poke(memAddress+384, toDraw*32767);
+        do Memory.poke(memAddress+416, toDraw*32767);
+        do Memory.poke(memAddress+448, toDraw*-1);
+        do Memory.poke(memAddress+480, toDraw*-1);
+        return;
+    }
+
+    /*
+        The function draw the left bottom part of the car.
+    */
+    method void leftBottom(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384+location+startIn+512;
+        do Memory.poke(memAddress+0, toDraw*-16);
+        do Memory.poke(memAddress+32, toDraw*-16);
+        do Memory.poke(memAddress+64, toDraw*-16);
+        do Memory.poke(memAddress+96, toDraw*-16);
+        do Memory.poke(memAddress+128, toDraw*-16);
+        do Memory.poke(memAddress+160, toDraw*-16);
+        do Memory.poke(memAddress+192, toDraw*-32);
+        do Memory.poke(memAddress+224, toDraw*-64);
+        do Memory.poke(memAddress+256, toDraw*-128);
+        do Memory.poke(memAddress+288, toDraw*-256);
+        do Memory.poke(memAddress+320, toDraw*-4096);
+        do Memory.poke(memAddress+352, toDraw*-4096);
+        do Memory.poke(memAddress+384, toDraw*-4096);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+    
+    /*
+        The function draw the middle bottom part of the car.
+    */
+    method void middleBottom(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384+location+startIn+513;
+        do Memory.poke(memAddress+0, toDraw*-1);
+        do Memory.poke(memAddress+32, toDraw*-1);
+        do Memory.poke(memAddress+64, toDraw*-1);
+        do Memory.poke(memAddress+96, toDraw*-1);
+        do Memory.poke(memAddress+128, toDraw*-1);
+        do Memory.poke(memAddress+160, toDraw*-1);
+        do Memory.poke(memAddress+192, toDraw*-1);
+        do Memory.poke(memAddress+224, toDraw*-1);
+        do Memory.poke(memAddress+256, toDraw*-1);
+        do Memory.poke(memAddress+288, toDraw*-1);
+        do Memory.poke(memAddress+320, toDraw*-4081);
+        do Memory.poke(memAddress+352, toDraw*-4081);
+        do Memory.poke(memAddress+384, toDraw*-4081);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+    
+    /*
+        The function draw the right bottom part of the car.
+    */
+    method void rightBottom(int toDraw, int startIn){
+        var int memAddress;
+        let memAddress = 16384+location+startIn+514;
+        do Memory.poke(memAddress+0, toDraw*-1);
+        do Memory.poke(memAddress+32, toDraw*-1);
+        do Memory.poke(memAddress+64, toDraw*32767);
+        do Memory.poke(memAddress+96, toDraw*32767);
+        do Memory.poke(memAddress+128, toDraw*16383);
+        do Memory.poke(memAddress+160, toDraw*16383);
+        do Memory.poke(memAddress+192, toDraw*8191);
+        do Memory.poke(memAddress+224, toDraw*4095);
+        do Memory.poke(memAddress+256, toDraw*1023);
+        do Memory.poke(memAddress+288, toDraw*255);
+        do Memory.poke(memAddress+320, toDraw*15);
+        do Memory.poke(memAddress+352, toDraw*15);
+        do Memory.poke(memAddress+384, toDraw*15);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+
+}

@@ -1,0 +1,36 @@
+class Road {
+
+    field int y, start, carAmount;
+    field Car car;
+
+    /*
+        Start a road;
+    */
+    constructor Road new(int tempY, int tempStart, int tempCarAmount) {
+        let y = tempY;
+        let start = tempStart;
+        let carAmount = tempCarAmount;
+        do createRoad();
+        return this;
+    }
+    
+    /* 
+        The function creates a new road with cars.
+    */  
+    method void createRoad() {
+        do Screen.drawLine(0, y, 511, y);
+        do Screen.drawLine(0, y + 3, 511, y + 3);
+        do Screen.drawLine(0, y + 42, 511, y + 42);
+        do Screen.drawLine(0, y + 45, 511, y + 45);
+        let car = Car.new(Math.multiply(y + 7,  32) + start, carAmount);
+        return;
+    }
+
+    /* 
+        The function run the road cars according to the parmeter.
+    */
+    method boolean runRoad(int delay) {
+        return car.runCar(delay);
+    }
+
+}

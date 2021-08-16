@@ -1,0 +1,95 @@
+class Info{
+
+    field int score, lives, level;
+    
+    /*
+        Constructe a Info of the board;
+    */
+    constructor Info new(){
+        let score = 0;
+        let level = 1;
+        let lives = 3;
+        do startInfo();
+        return this;
+    }
+    
+    /* 
+        The function change the score and draw it again on the screen.
+    */  
+    method int setScore(int newScore) {
+        let score = score + newScore;
+        do Output.moveCursor(21, 5);
+        do Output.printString("SCORE: ");
+        do Output.printInt(score);
+        return score;
+    }
+    
+    /* 
+        The function change the level and draw it again on the screen.
+    */  
+    method int setLevel() {
+        let level = level + 1;
+        do Output.moveCursor(21, 26);
+        do Output.printString("LEVEL: ");
+        do Output.printInt(level);
+        return level;
+    }
+    
+    /* 
+        The function change the lives and delete one heart from the screen.
+    */
+    method int setLives() {
+        let lives = lives - 1;
+        do drawHeart(7354 + lives, 0);
+        return lives;
+    }
+    
+    /* 
+        The function draw all the informtion on the bottom of the screen.
+    */
+    method void startInfo() {
+        let lives = 3;
+        do Screen.drawLine(0, 216, 511, 216);
+        do Screen.drawLine(0, 217, 511, 217);
+        do Screen.drawLine(0, 218, 511, 218);
+       
+        do Output.moveCursor(21, 5);
+        do Output.printString("SCORE: ");
+        do Output.printInt(score);
+        do Output.moveCursor(21, 26);
+        do Output.printString("LEVEL: ");
+        do Output.printInt(level);
+        do Output.moveCursor(21, 46);
+        do Output.printString("LIVES: ");
+
+        do drawHeart(7354, 1);
+        do drawHeart(7355, 1);
+        do drawHeart(7356, 1);
+        return;
+    }
+
+    /* 
+        The function draw heart on the screen in the given location.
+    */
+    method void drawHeart(int infoLocation, int toDraw) {
+        var int memAddress;
+        let memAddress = 16384+infoLocation;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, toDraw * 3640);
+        do Memory.poke(memAddress+160, toDraw * 8060);
+        do Memory.poke(memAddress+192, toDraw * 16382);
+        do Memory.poke(memAddress+224, toDraw * 16382);
+        do Memory.poke(memAddress+256, toDraw * 8188);
+        do Memory.poke(memAddress+288, toDraw * 4088);
+        do Memory.poke(memAddress+320, toDraw * 992);
+        do Memory.poke(memAddress+352, toDraw * 448);
+        do Memory.poke(memAddress+384, toDraw * 128);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+}

@@ -1,0 +1,33 @@
+class Main {
+
+    /*
+        Start a game with six levels.
+    */
+    function void main() {
+        var Board board;
+        var int exitprogram;
+        while (true) {
+            do Screen.clearScreen();
+            let exitprogram = 0;
+            let board = Board.new();
+            do board.createLevels();
+            if (board.getExitGame()) {
+                return;
+            }
+            do Screen.clearScreen();
+            do Output.moveCursor(11, 18);
+            do Output.printString("PLAY AGAIN? >> (Y/N)");
+            while (~((exitprogram = 78) | (exitprogram = 89) | (exitprogram = 110) | (exitprogram = 121))) {
+                let exitprogram = Keyboard.readChar();
+                do Screen.clearScreen();
+                do Output.moveCursor(11, 18);
+                do Output.printString("PLAY AGAIN? >> (Y/N)");
+            }
+            if ((exitprogram = 78) | (exitprogram = 110)) {
+                do board.goodbye();
+                return;
+            }
+        }
+        return;
+    }
+}

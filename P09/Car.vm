@@ -1,0 +1,1058 @@
+function Car.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 0
+pop this 1
+push this 1
+pop this 2
+push argument 1
+pop this 3
+push pointer 0
+return
+function Car.createCar 0
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.leftUp 3
+pop temp 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.middleUp 3
+pop temp 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.rightUp 3
+pop temp 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.leftBottom 3
+pop temp 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.middleBottom 3
+pop temp 0
+push pointer 0
+push argument 1
+push argument 2
+call Car.rightBottom 3
+pop temp 0
+push constant 0
+return
+function Car.mod 1
+push argument 0
+pop pointer 0
+push argument 1
+push argument 1
+push constant 2
+call Math.divide 2
+push constant 2
+call Math.multiply 2
+sub
+pop local 0
+push local 0
+return
+function Car.createCars 1
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push this 3
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push argument 1
+push local 0
+push constant 9
+call Math.multiply 2
+push pointer 0
+push local 0
+call Car.mod 2
+add
+call Car.createCar 3
+pop temp 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Car.runCar 1
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 0
+push argument 1
+call Sys.wait 1
+pop temp 0
+push pointer 0
+push constant 0
+call Car.createCars 2
+pop temp 0
+push this 2
+pop this 0
+push this 2
+push constant 1
+add
+pop this 2
+push this 2
+push this 1
+push constant 30
+add
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 1
+pop this 2
+label IF_FALSE0
+push pointer 0
+call Car.checkCrash 1
+pop local 0
+push pointer 0
+push constant 1
+call Car.createCars 2
+pop temp 0
+push local 0
+return
+function Car.checkCrash 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+label WHILE_EXP0
+push local 0
+push this 3
+lt
+not
+if-goto WHILE_END0
+push local 0
+push constant 9
+call Math.multiply 2
+push pointer 0
+push local 0
+call Car.mod 2
+add
+push constant 16864
+add
+push this 0
+add
+pop local 2
+label WHILE_EXP1
+push local 1
+push constant 3
+lt
+not
+if-goto WHILE_END1
+push local 2
+push local 1
+add
+call Memory.peek 1
+push constant 0
+eq
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 1
+add
+pop local 0
+push constant 0
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+not
+return
+function Car.leftUp 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+add
+push argument 2
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 256
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 128
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 64
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 32
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Car.middleUp 1
+push argument 0
+pop pointer 0
+push constant 16384
+push argument 2
+add
+push this 0
+add
+push constant 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Car.rightUp 1
+push argument 0
+pop pointer 0
+push constant 16384
+push argument 2
+add
+push this 0
+add
+push constant 2
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 255
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 1023
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 4095
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 8191
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 16383
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 16383
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 32767
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push argument 1
+push constant 32767
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Car.leftBottom 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+add
+push argument 2
+add
+push constant 512
+add
+pop local 0
+push local 0
+push constant 0
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 16
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 32
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 64
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 128
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 256
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 4096
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Car.middleBottom 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+add
+push argument 2
+add
+push constant 513
+add
+pop local 0
+push local 0
+push constant 0
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 4081
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Car.rightBottom 1
+push argument 0
+pop pointer 0
+push constant 16384
+push this 0
+add
+push argument 2
+add
+push constant 514
+add
+pop local 0
+push local 0
+push constant 0
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push argument 1
+push constant 1
+neg
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push argument 1
+push constant 32767
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push argument 1
+push constant 32767
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push argument 1
+push constant 16383
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push argument 1
+push constant 16383
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push argument 1
+push constant 8191
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push argument 1
+push constant 4095
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push argument 1
+push constant 1023
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push argument 1
+push constant 255
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push argument 1
+push constant 15
+call Math.multiply 2
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return

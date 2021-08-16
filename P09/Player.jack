@@ -1,0 +1,561 @@
+class Player {
+
+    field int pLocation, constLocation, type, roadAmount, playerRow, restLives, level, score, speed;
+    field boolean notCrash, isWin, winGame;
+    field Info info;
+    
+    /*
+        Constructe a player informtion;
+    */
+    constructor Player new(int loc, int tempSpeed) {
+        let constLocation = loc;
+        let pLocation = loc;
+        let type = 0;
+        let roadAmount = 3;
+        let playerRow = 0;
+        let restLives = 3;
+        let level = 1;
+        let score = 0;
+        let speed = tempSpeed;
+        let notCrash = true;
+        let isWin = false;
+        let winGame = false;
+        let info = Info.new();
+        return this;
+    }
+
+    /*
+        The function return the value of isWin prameter.
+    */
+    method boolean getIsWin() {
+        return isWin;
+    }
+    
+    /*
+       The function set the isWin prameter to false.
+    */
+    method void restartWin() {
+        let isWin = false;
+        return;
+    }
+    
+    /*
+       The function set the road amount to 4.
+    */
+    method void setRoadAmount() {
+        let roadAmount = 4;
+        return;
+    }
+    
+    /*
+       The function returns the number of the lives.
+    */
+    method int getLives() {
+        return restLives;
+    }
+    
+    /*
+       The function returns the value of the WinGame prameter.
+    */
+    method boolean getWinGame() {
+        return winGame;
+    }
+    
+    /*
+       The function draw the info on the screen and the player on the top of the screen.
+    */
+    method void startInfo() {
+        do info.startInfo();
+        do createPlayer(false, 1);
+        return;
+    }
+    
+    /*
+       The function draw a player on the screen.
+    */
+    method void createPlayer(boolean fail, int toDraw) {
+
+        do leftUp(toDraw);
+        do rightUp(toDraw);
+        if (~fail)
+        {    
+            if (type = 0){
+                do leftHandUp(toDraw);
+                do rightHandDown(toDraw);
+            }
+            else {
+                if (type = 1){
+                do leftHandDown(toDraw);
+                do rightHandUp(toDraw);
+                }
+            }
+        }
+        else{
+            do rightSad(toDraw);
+            do leftSad(toDraw);
+        }
+        return;
+    }
+    
+    /*
+       The function checks where to move the player according to the prassed keyboard.
+    */
+    method boolean movePlayer(int direction) {
+        if (direction = 1) { do moveUp(); }
+        if (direction = 2) { do moveDown(); }
+        if (direction = 3) { do moveLeft(); }
+        if (direction = 4) { do moveRight(); }
+        return notCrash;
+    }
+    
+    /*
+       The function checks if there is crash between the player and one of the cars.
+    */
+    method boolean checkCrash() {
+        var int i;
+        let i = 0;
+        while (i < 2) {
+            if(~(Memory.peek(16864 + pLocation + i) = 0)) {
+                return false;
+            }
+            let i = i + 1;
+        }
+        let i = 0;
+        return true;
+    }
+    
+    /*
+        The function draw the left up part of the car.
+    */
+    method void leftUp(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, toDraw* -2048);
+        do Memory.poke(memAddress+192, toDraw* 1536);
+        do Memory.poke(memAddress+224, toDraw* 256);
+        do Memory.poke(memAddress+256, toDraw* 128);
+        do Memory.poke(memAddress+288, toDraw* 3136);
+        do Memory.poke(memAddress+320, toDraw* 4672);
+        do Memory.poke(memAddress+352, toDraw* 8480);
+        do Memory.poke(memAddress+384, toDraw* 8480);
+        do Memory.poke(memAddress+416, toDraw* 16144);
+        do Memory.poke(memAddress+448, toDraw* 16);
+        do Memory.poke(memAddress+480, toDraw* 16);
+        return;
+    }
+    
+    /*
+        The function draw the right up part of the car.
+    */
+    method void rightUp(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+1;
+        do Memory.poke(memAddress+0, 0);
+        do Memory.poke(memAddress+32, 0);
+        do Memory.poke(memAddress+64, 0);
+        do Memory.poke(memAddress+96, 0);
+        do Memory.poke(memAddress+128, 0);
+        do Memory.poke(memAddress+160, toDraw* 31);
+        do Memory.poke(memAddress+192, toDraw* 96);
+        do Memory.poke(memAddress+224, toDraw* 128);
+        do Memory.poke(memAddress+256, toDraw* 256);
+        do Memory.poke(memAddress+288, toDraw* 560);
+        do Memory.poke(memAddress+320, toDraw* 584);
+        do Memory.poke(memAddress+352, toDraw* 1156);
+        do Memory.poke(memAddress+384, toDraw* 1156);
+        do Memory.poke(memAddress+416, toDraw* 2300);
+        do Memory.poke(memAddress+448, toDraw* 2048);
+        do Memory.poke(memAddress+480, toDraw* 2048);
+        return;
+    }
+    
+    /*
+        The function draw the left Hand Up part of the car.
+    */
+    method void leftHandUp(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+512;
+        do Memory.poke(memAddress+0, toDraw* 16);
+        do Memory.poke(memAddress+32, toDraw* 3095);
+        do Memory.poke(memAddress+64, toDraw* -3025);
+        do Memory.poke(memAddress+96, toDraw* 2092);
+        do Memory.poke(memAddress+128, toDraw* 4172);
+        do Memory.poke(memAddress+160, toDraw* 8332);
+        do Memory.poke(memAddress+192, toDraw* -16244);
+        do Memory.poke(memAddress+224, toDraw* 268);
+        do Memory.poke(memAddress+256, toDraw* 2044);
+        do Memory.poke(memAddress+288, toDraw* 8188);
+        do Memory.poke(memAddress+320, toDraw* -8192);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+     
+    /*
+        The function draw the left hand up part of the car.
+    */
+    method void leftHandDown(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+512;
+        do Memory.poke(memAddress+0, toDraw* 16);
+        do Memory.poke(memAddress+32, toDraw* 3088);
+        do Memory.poke(memAddress+64, toDraw* -3040);
+        do Memory.poke(memAddress+96, toDraw* 2080);
+        do Memory.poke(memAddress+128, toDraw* 4160);
+        do Memory.poke(memAddress+160, toDraw* 8320);
+        do Memory.poke(memAddress+192, toDraw* -16256);
+        do Memory.poke(memAddress+224, toDraw* 256);
+        do Memory.poke(memAddress+256, toDraw* 1776);
+        do Memory.poke(memAddress+288, toDraw* 7664);
+        do Memory.poke(memAddress+320, toDraw* -8144);
+        do Memory.poke(memAddress+352, toDraw* 48);
+        do Memory.poke(memAddress+384, toDraw* 48);
+        do Memory.poke(memAddress+416, toDraw* 48);
+        do Memory.poke(memAddress+448, toDraw* 60);
+        do Memory.poke(memAddress+480, toDraw* 60);
+        return;
+    }
+    
+    /*
+        The function draw the right hand up part of the car.
+    */
+    method void rightHandUp(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+513;
+        do Memory.poke(memAddress+0, toDraw* 2048);
+        do Memory.poke(memAddress+32, toDraw* -6096);
+        do Memory.poke(memAddress+64,  toDraw*-3025);
+        do Memory.poke(memAddress+96, toDraw* 13328);
+        do Memory.poke(memAddress+128, toDraw* 12808);
+        do Memory.poke(memAddress+160, toDraw* 12548);
+        do Memory.poke(memAddress+192, toDraw* 12547);
+        do Memory.poke(memAddress+224, toDraw* 12416);
+        do Memory.poke(memAddress+256, toDraw* 16352);
+        do Memory.poke(memAddress+288, toDraw* 16376);
+        do Memory.poke(memAddress+320, toDraw* 7);
+        do Memory.poke(memAddress+352, 0);
+        do Memory.poke(memAddress+384, 0);
+        do Memory.poke(memAddress+416, 0);
+        do Memory.poke(memAddress+448, 0);
+        do Memory.poke(memAddress+480, 0);
+        return;
+    }
+    
+    /*
+        The function draw the right hand down part of the car.
+    */
+    method void rightHandDown(int toDraw) {
+        var int memAddress;
+        let memAddress = 16384+pLocation+513;
+        do Memory.poke(memAddress+0, toDraw* 2048);
+        do Memory.poke(memAddress+32, toDraw* 2096);
+        do Memory.poke(memAddress+64, toDraw* 1071);
+        do Memory.poke(memAddress+96, toDraw* 1040);
+        do Memory.poke(memAddress+128, toDraw* 520);
+        do Memory.poke(memAddress+160, toDraw* 260);
+        do Memory.poke(memAddress+192, toDraw* 259);
+        do Memory.poke(memAddress+224, toDraw* 128);
+        do Memory.poke(memAddress+256, toDraw* 3936);
+        do Memory.poke(memAddress+288, toDraw* 4024);
+        do Memory.poke(memAddress+320, toDraw* 3079);
+        do Memory.poke(memAddress+352, toDraw* 3072);
+        do Memory.poke(memAddress+384, toDraw* 3072);
+        do Memory.poke(memAddress+416, toDraw* 3072);
+        do Memory.poke(memAddress+448, toDraw* 15360);
+        do Memory.poke(memAddress+480, toDraw* 15360);
+        return;
+    }
+   
+    /*
+        The function draw the right sad part of the car.
+    */
+    method void rightSad(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+513;
+        do Memory.poke(memAddress+0, toDraw*2048);
+        do Memory.poke(memAddress+32, toDraw*2051);
+        do Memory.poke(memAddress+64, toDraw*1028);
+        do Memory.poke(memAddress+96, toDraw*1032);
+        do Memory.poke(memAddress+128, toDraw*528);
+        do Memory.poke(memAddress+160, toDraw*279);
+        do Memory.poke(memAddress+192, toDraw*280);
+        do Memory.poke(memAddress+224, toDraw*128);
+        do Memory.poke(memAddress+256, toDraw*3936);
+        do Memory.poke(memAddress+288, toDraw*4024);
+        do Memory.poke(memAddress+320, toDraw*3079);
+        do Memory.poke(memAddress+352, toDraw*3072);
+        do Memory.poke(memAddress+384, toDraw*3072);
+        do Memory.poke(memAddress+416, toDraw*3072);
+        do Memory.poke(memAddress+448, toDraw*15360);
+        do Memory.poke(memAddress+480, toDraw*15360);
+        return;
+    }
+    
+    /*
+        The function draw the left sad part of the car.
+    */
+    method void leftSad(int toDraw){
+        var int memAddress;
+        let memAddress = 16384+pLocation+512;
+        do Memory.poke(memAddress+0, toDraw*16);
+        do Memory.poke(memAddress+32, toDraw*-16368);
+        do Memory.poke(memAddress+64, toDraw*8224);
+        do Memory.poke(memAddress+96, toDraw*4128);
+        do Memory.poke(memAddress+128, toDraw*2112);
+        do Memory.poke(memAddress+160, toDraw*-6016);
+        do Memory.poke(memAddress+192, toDraw*6272);
+        do Memory.poke(memAddress+224, toDraw*256);
+        do Memory.poke(memAddress+256, toDraw*1776);
+        do Memory.poke(memAddress+288, toDraw*7664);
+        do Memory.poke(memAddress+320, toDraw*-8144);
+        do Memory.poke(memAddress+352, toDraw*48);
+        do Memory.poke(memAddress+384, toDraw*48);
+        do Memory.poke(memAddress+416, toDraw*48);
+        do Memory.poke(memAddress+448, toDraw*60);
+        do Memory.poke(memAddress+480, toDraw*60);
+        return;
+    }
+   
+    /*
+        The function stop the game and draw on the screen that the game over.
+    */
+    method void gameOver() {
+        do Screen.clearScreen();
+        do Screen.drawLine(30, 30, 481, 30);
+        do Screen.drawLine(30, 40, 481, 40);
+        do Screen.drawLine(30, 225, 481, 225);
+        do Screen.drawLine(30, 235, 481, 235);
+
+        do Screen.drawLine(100, 0, 100, 255);
+        do Screen.drawLine(110, 0, 110, 255);
+        do Screen.drawLine(401, 0, 401, 255);
+        do Screen.drawLine(411, 0, 411, 255);
+        do Output.moveCursor(9, 26);
+        do Output.printString("GAME OVER");
+        let pLocation = 4622;
+        while ((pLocation + 160) < 7500) {
+            do createPlayer(true, 1);
+            do Sys.wait(300);
+            do createPlayer(true, 0);
+            do Screen.drawLine(30, 225, 481, 225);
+            do Screen.drawLine(30, 235, 481, 235);
+            let pLocation = pLocation + 160;
+        }
+        return;
+    }
+    
+    /*
+       The function calculates the remainder of the level number.
+    */
+    method int levelPoints() {
+        var int points;
+        let points = (level - ((level / 2) * 2)) + (level / 2);
+        return points;
+    }
+
+    /*
+       The function move the player to right in the win dance.
+    */
+    method void winRight() {
+        do moveRight();
+        do Sys.wait(200);
+        do moveRight();
+        do Sys.wait(200);
+        return;
+    }
+   
+    /*
+       The function move the player to left in the win dance.
+    */
+    method void winLeft() {
+        do moveLeft();
+        do Sys.wait(200);
+        do moveLeft();
+        do Sys.wait(200);
+        return;
+    }
+   
+    /*
+       The function draw on the screen a win dance and stop the game.
+    */
+    method void win(){
+        var int i;
+        var int j;
+        let i = 0;
+        let j = 0;
+        do Screen.clearScreen();
+        do Screen.drawLine(30, 30, 481, 30);
+        do Screen.drawLine(30, 235, 481, 235);
+        do Screen.drawLine(30, 40, 481, 40);
+        do Screen.drawLine(30, 225, 481, 225);
+
+        do Screen.drawLine(100, 0, 100, 255);
+        do Screen.drawLine(411, 0, 411, 255);
+        do Screen.drawLine(110, 0, 110, 255);
+        do Screen.drawLine(401, 0, 401, 255);
+        
+
+        do Output.moveCursor(7, 29);
+        do Output.printString("WIN!!!");
+        do Output.moveCursor(9, 23);
+        do Output.printString("YOUR SCORE IS: ");
+        do Output.printInt(score);
+        let pLocation = 5642;
+        do createPlayer(false, 1);
+
+        while(i < 3)
+        {
+            while ( j < 2) {
+                do winRight();
+                do moveUp();
+                do Sys.wait(200);
+                do winRight();
+                do moveDown();
+                do Sys.wait(200);
+                let j = j + 1;
+            }
+            do winRight();
+            let j = 0;
+
+            while ( j < 2) {
+                do winLeft();
+                do moveUp();
+                do Sys.wait(200);
+                do winLeft();
+                do moveDown();
+                do Sys.wait(200);
+                let j = j + 1;
+            }
+            do winLeft();
+            let j = 0;
+            let i = i + 1;
+        }
+        return;
+    }
+    
+     /*
+       The function checks the level and if it is not the last starts a new level, else call the win func.
+    */
+    method void advance() {
+        let isWin = true;
+        let score = info.setScore(level + 4 + (restLives * 2) + speed); 
+        if (level = 6) {
+            do win();
+            let winGame = true;
+        }
+        else {
+            let level = info.setLevel();
+            do createPlayer(false, 0);
+            let pLocation = constLocation;
+            do Screen.clearScreen();
+            do Output.moveCursor(9, 23);
+            do Output.printString("START LEVEL ");
+            do Output.printInt(level);
+            do Output.moveCursor(13, 13);
+            do Output.printString("UNTIL NOW, YOU HAVE EARNED ");
+            do Output.printInt(score);
+            do Output.printString(" POINTS");
+            do Sys.wait(3500);
+        }
+        return;
+    }
+
+    /*
+       The function move the player up.
+    */
+    method void moveUp() {
+        if(~ ((pLocation - 1344) < 0)) {
+            do createPlayer(false, 0);
+            let type = 1 - type;
+            let pLocation = pLocation - 1344;
+            let notCrash = checkCrash();
+            do createPlayer(false, 1);
+            let playerRow = playerRow - 1;
+            if (notCrash & (~isWin)) {
+                let score = info.setScore(levelPoints());
+            }
+        }
+        return;
+    }
+
+    /*
+       The function move the player down.
+    */
+    method void moveDown() {
+        var int points;
+        if((pLocation + 1344) < (1200 * ( 1 + roadAmount))) {
+            do createPlayer(false, 0);
+            let type = 1 - type;
+            let pLocation = pLocation + 1344;
+            let notCrash = checkCrash();
+            do createPlayer(false, 1);
+            let playerRow = playerRow + 1;
+            if (notCrash & (~isWin)) {
+                let points = levelPoints();
+                let score = info.setScore(points);
+            }
+        }
+        else {
+            do advance();
+        }
+        return;
+    }
+    
+    /*
+       The function move the player right.
+    */
+    method void moveRight() {
+        var int temp;
+        var int temp2;
+        let temp = Math.divide((pLocation), 32);
+        let temp2 = (pLocation - (Math.multiply(32, temp)));
+        if(~(temp2 = 30)) {
+            do createPlayer(false, 0);
+            let type = 1 - type;
+            let pLocation = pLocation + 1;
+            let notCrash = checkCrash();
+            do createPlayer(false, 1);
+        }
+        return;
+    }
+    
+    /*
+       The function move the player left.
+    */
+    method void moveLeft() {
+        var int temp;
+        var int temp2;
+        let temp = Math.divide((pLocation), 32);
+        let temp2 = (pLocation - (Math.multiply(32, temp)));
+        if(temp2 > 0) {
+            do createPlayer(false, 0);
+            let type = 1 - type;
+            let pLocation = pLocation - 1;
+            let notCrash = checkCrash();
+            do createPlayer(false, 1);
+        }
+        return;
+    }
+        
+    /*
+       The function set the lives and the player loction on crash.
+    */    
+    method boolean crash() {
+        do createPlayer(false, 0);
+        let pLocation = 0;
+        do createPlayer(true, 1);
+        let restLives = info.setLives();
+        if (restLives = 0) {
+            return true;
+        }
+        return false;
+    }
+}

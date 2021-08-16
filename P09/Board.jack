@@ -1,0 +1,219 @@
+class Board{
+
+    field int roadAmount, delay, key, direction, selectedRoad, lives, speed;
+    field boolean exitGame;
+    field Road road1, road2, road3, road4;
+    field Player player;
+
+    /*
+        Start a game;
+    */
+    constructor Board new(){
+        let speed = 0;
+        do Output.moveCursor(11, 13);
+        do Output.printString("CHOOSE A DIFFICULTY LEVEL BETWEEN 1-3");
+        while ((speed < 49) | (speed > 51)) {
+            let speed = Keyboard.readChar();
+            do Screen.clearScreen();
+            do Output.moveCursor(11, 13);
+            do Output.printString("CHOOSE A DIFFICULTY LEVEL BETWEEN 1-3");
+        }
+        do Screen.clearScreen();
+        let speed = speed - 48;
+        do Output.moveCursor(9, 23);
+        do Output.printString("START GAME");
+        do Output.moveCursor(12, 25);
+        do Output.printString("LEVEL 1");
+        do Sys.wait(2000);
+        do Screen.clearScreen();
+        let player = Player.new(0, speed);
+        do player.createPlayer(false, 1);
+        let key = 0;
+        let direction = 0; 
+        let lives = player.getLives(); 
+        let exitGame = false;
+        return this;
+    }
+    
+
+
+    method boolean getExitGame() {
+        return exitGame;
+    }
+
+    /* 
+        The function creates a new board to any level and made all the cars in any road run and listen to the keyboard.
+    */  
+    method void createBoard() {
+        var boolean exit;
+        var boolean notCashed;
+        var int i;
+        let exit = false;
+        let i = 0;
+        while (~exit & ~exitGame) {
+            let key = Keyboard.keyPressed();
+            while ((key = 0) & (~exit & ~exitGame)) {
+                let key = Keyboard.keyPressed();
+                let notCashed = runRoads();
+                if(~notCashed) {
+                    let exit = player.crash();
+                }
+            }
+            if (~exit & ~exitGame) {
+                if (key = 81)  { let exitGame = true; }
+                if (key = 131) { let direction = 1; }
+                if (key = 133) { let direction = 2; }
+                if (key = 130) { let direction = 3; }
+                if (key = 132) { let direction = 4; }
+                if (~(key = 0)) {
+                    let notCashed = player.movePlayer(direction);
+                    let direction = 0;
+                    if (player.getIsWin()) {
+                        return;
+                    }
+                    if(~notCashed) {
+                        let exit = player.crash();
+                    }
+                }
+                while ((i < ((speed * 2) - 1)) & (~exit & ~exitGame)) {
+                    let notCashed = runRoads();
+                    if(~notCashed) {
+                        let exit = player.crash();
+                    }
+                let i = i + 1;
+                }
+                let i = 0;
+            }
+        }
+        return;
+    }
+
+    /* 
+        The function made all the cars in any road run.
+    */ 
+    method boolean runRoads() {
+        var boolean isNotCrashed;
+        if (selectedRoad = 1) {
+            let isNotCrashed = road1.runRoad(delay);
+            let selectedRoad = 2;
+        }
+        else {
+            if (selectedRoad = 2) {
+            let isNotCrashed = road2.runRoad(delay);
+            let selectedRoad = 3;
+            }
+            else {
+                if (selectedRoad = 3) {
+                    let isNotCrashed = road3.runRoad(delay);
+                    if(roadAmount = 4) { 
+                        let selectedRoad = 4;
+                    }
+                    else {
+                        let selectedRoad = 1;
+                    }
+                }
+                else {
+                    if (selectedRoad = 4) {
+                        let isNotCrashed = road4.runRoad(delay);
+                        let selectedRoad = 1;
+                    }
+                }
+            }
+        }
+        return isNotCrashed;
+    }
+
+    /* 
+        The function start a new level.
+    */ 
+    method void createLevel(int roadAmnt, int tempDelay, int carsVar) {
+        let roadAmount = roadAmnt;
+        let delay = tempDelay;
+        let selectedRoad = 1;
+        let road1 = Road.new(37, 0, carsVar + 1);
+        let road2 = Road.new(79, 6, carsVar);
+        let road3 = Road.new(121, 4, carsVar + 2);
+        if(roadAmnt = 4)
+        {  
+            do player.setRoadAmount();
+            let road4 = Road.new(163, 7, carsVar);
+        }
+        do createBoard();
+        if (~(player.getWinGame())) {
+            do Screen.clearScreen();
+            do player.restartWin();
+            let lives = player.getLives();
+            do player.startInfo();
+        }
+        return;
+    }
+    
+
+    method void goodbye() {
+        do Screen.clearScreen();
+        do Output.moveCursor(10, 25);
+        do Output.printString("GOOD BYE!!!");
+        return;
+    }
+
+    /* 
+        The function move level by level in the game and if the there is no lives stop the game.
+    */ 
+    method void createLevels() {
+        do createLevel(3, 60 - (4 * speed), 1);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        do createLevel(3, 50 - (4 * speed), 2);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        do createLevel(3, 35 - (4 * speed), 2);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        do createLevel(4, 60 - (4 * speed), 1);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        do createLevel(4, 50 - (4 * speed), 2);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        do createLevel(4, 35 - (4 * speed), 2);
+        if (lives = 0){
+            do player.gameOver();
+            return;
+        }
+        if (exitGame) {
+            do goodbye();
+            return;
+        }
+        return;
+    }
+}
